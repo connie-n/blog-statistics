@@ -1,0 +1,72 @@
+---
+title: "Linear Regression"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+### Using lm() Function in R
+
+lm() function in R is a linear model function, used for linear regression analysis. 
+
+
+lm(formula, data, ...)
+
+
+
+
+Here is the data I will use.
+sample file: train data from Kaggle Walmart data set
+
+
+```{r setup, include=FALSE}
+train <- read.csv("kaggle_walmart_train.csv")
+head(train)
+```
+
+below is scatter plot of train data.
+for draw scatter plot, set the data using group_by function.
+
+
+```{r setup, include=FALSE}
+library(dplyr)
+train_groupby<- group_by(train, Store) %>% summarise(Weekly_Sales = mean(Weekly_Sales))
+
+
+with(train_groupby,
+     plot(Store, Weekly_Sales, asp=1,
+          xlab="Store",
+          ylab="Weekly_sales",
+          main="plot of weekly_sales & store"))
+
+```
+
+
+
+
+
+
+```{r setup, include=FALSE}
+result <- lm(Weekly_Sales~Store, data=train)
+attributes(result)
+
+```
+result라는 객체는 lm클래스에 속하며, 12개의 결과값을 가지고 있습니다. 
+There are 12 values. 
+
+### Coefficients 
+
+```{r setup, include=FALSE}
+result$coefficients
+
+```
+These are intercept and slope of linear which we want to get.  
+
+
+
+
+
+
+
